@@ -1,0 +1,16 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAppPreferences } from '../../../contexts/AppPreferencesContext';
+
+export default function NotificationsScreen() {
+  const [read, setRead] = useState(false);
+  const [budgetAlerts, setBudgetAlerts] = useState(true);
+  const { darkMode } = useAppPreferences();
+  const theme = darkMode ? { background: '#0f172a', card: '#1e293b', text: '#f8fafc', muted: '#cbd5e1' } : { background: '#f8fafc', card: '#fff', text: '#0f172a', muted: '#64748b' };
+  const alerts = [{ icon: 'trending-up-outline', title: 'You are doing great', text: 'Your spending is 12% lower this month.', color: '#10b981' }, { icon: 'warning-outline', title: 'Food budget reminder', text: 'You have used 72% of your food budget.', color: '#f59e0b' }];
+  return <SafeAreaView style={[styles.screen, { backgroundColor: theme.background }]} edges={['top', 'left', 'right']}><ScrollView><View style={styles.header}><View><Text style={[styles.title, { color: theme.text }]}>Notifications</Text><Text style={[styles.subtitle, { color: theme.muted }]}>Stay on top of your money.</Text></View><Pressable onPress={() => setRead(true)}><Text style={styles.action}>{read ? 'All read' : 'Mark read'}</Text></Pressable></View>{alerts.map((alert) => <View key={alert.title} style={[styles.alert, { backgroundColor: theme.card }, read && styles.read]}><View style={[styles.icon, { backgroundColor: alert.color + '20' }]}><Ionicons name={alert.icon as never} size={22} color={alert.color} /></View><View style={styles.copy}><Text style={[styles.alertTitle, { color: theme.text }]}>{alert.title}</Text><Text style={[styles.alertText, { color: theme.muted }]}>{alert.text}</Text></View></View>)}<View style={[styles.preference, { backgroundColor: theme.card }]}><View><Text style={[styles.alertTitle, { color: theme.text }]}>Budget alerts</Text><Text style={[styles.alertText, { color: theme.muted }]}>Get notified when a budget is nearly used.</Text></View><Switch value={budgetAlerts} onValueChange={setBudgetAlerts} trackColor={{ true: '#93c5fd' }} thumbColor={budgetAlerts ? '#2563eb' : '#e2e8f0'} /></View></ScrollView></SafeAreaView>;
+}
+
+const styles = StyleSheet.create({ screen: { flex: 1, backgroundColor: '#f8fafc', paddingHorizontal: 22 }, header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 20 }, title: { color: '#0f172a', fontSize: 30, fontWeight: '800' }, subtitle: { color: '#64748b', marginTop: 5 }, action: { color: '#2563eb', fontWeight: '700' }, alert: { backgroundColor: '#fff', borderRadius: 18, padding: 16, marginBottom: 10, flexDirection: 'row' }, read: { opacity: 0.55 }, icon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }, copy: { flex: 1, marginLeft: 12 }, alertTitle: { color: '#0f172a', fontWeight: '700' }, alertText: { color: '#64748b', fontSize: 13, lineHeight: 19, marginTop: 4 }, preference: { backgroundColor: '#fff', borderRadius: 18, padding: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 } });

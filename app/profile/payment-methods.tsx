@@ -1,0 +1,10 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+export default function PaymentMethodsScreen() {
+  return <SafeAreaView style={styles.screen}><Pressable onPress={() => router.back()}><Text style={styles.back}>‹ Back</Text></Pressable><Text style={styles.title}>Payment methods</Text><Text style={styles.subtitle}>Manage the cards you use for your expenses.</Text><View style={styles.card}><View style={styles.cardIcon}><Ionicons name="card" size={25} color="#fff" /></View><View style={styles.cardCopy}><Text style={styles.cardName}>Campus Visa</Text><Text style={styles.cardNumber}>•••• 4242</Text></View><Text style={styles.defaultText}>Default</Text></View><Pressable style={styles.add}><Ionicons name="add" size={22} color="#2563eb" /><Text style={styles.addText}>Add payment method</Text></Pressable></SafeAreaView>;
+}
+
+const styles = StyleSheet.create({ screen: { flex: 1, backgroundColor: '#f8fafc', padding: 22 }, back: { color: '#2563eb', fontSize: 17, fontWeight: '700' }, title: { color: '#0f172a', fontSize: 30, fontWeight: '800', marginTop: 28 }, subtitle: { color: '#64748b', marginTop: 6 }, card: { backgroundColor: '#0f172a', borderRadius: 20, padding: 20, marginTop: 26, flexDirection: 'row', alignItems: 'center' }, cardIcon: { width: 45, height: 45, borderRadius: 14, backgroundColor: '#2563eb', alignItems: 'center', justifyContent: 'center' }, cardCopy: { flex: 1, marginLeft: 13 }, cardName: { color: '#fff', fontWeight: '800', fontSize: 16 }, cardNumber: { color: '#cbd5e1', marginTop: 5 }, defaultText: { color: '#93c5fd', fontWeight: '700' }, add: { backgroundColor: '#dbeafe', borderRadius: 14, padding: 16, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 8, marginTop: 16 }, addText: { color: '#2563eb', fontWeight: '800' } });
